@@ -8,6 +8,18 @@ import {
 } from '@darylserrano/kindle-clippings';
 
 export default function Home() {
+  const [clippings, setClippings] = useState();
+
+  const handleClippingChange = (e) => {
+    try {
+      const clippings = readKindleClipping(e.target.value);
+      const parsedClippings = parseKindleEntries(clippings);
+      setClippings(parsedClippings);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div className="section">
@@ -34,6 +46,7 @@ export default function Home() {
                 <textarea
                   className="textarea"
                   placeholder="Paste your clippings file here"
+                  onChange={handleClippingChange}
                 />
               </div>
             </div>
@@ -43,6 +56,7 @@ export default function Home() {
                 <textarea
                   className="textarea"
                   placeholder="Output will appear here"
+                  value={JSON.stringify(clippings, null, 2)}
                   readOnly
                 />
               </div>
