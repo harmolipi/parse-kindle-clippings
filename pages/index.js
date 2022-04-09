@@ -5,16 +5,20 @@ import { useState } from 'react';
 import {
   readKindleClipping,
   parseKindleEntries,
+  organizeKindleEntriesByBookTitle,
 } from '@darylserrano/kindle-clippings';
 
 export default function Home() {
   const [clippings, setClippings] = useState();
+  const [books, setBooks] = useState([]);
 
   const handleClippingChange = (e) => {
     try {
       const clippings = readKindleClipping(e.target.value);
       const parsedClippings = parseKindleEntries(clippings);
+      const parsedBooks = organizeKindleEntriesByBookTitle(parsedClippings);
       setClippings(parsedClippings);
+      setBooks(parsedBooks);
     } catch (err) {
       console.log(err);
     }
