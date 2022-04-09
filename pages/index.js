@@ -36,7 +36,8 @@ export default function Home() {
           <main className="main">
             <h1 className="title is-1 has-text-centered">Kindle Note Parser</h1>
             <p className="subtitle is-4 has-text-centered">
-              Get started by pasting your 'my clippings.txt' file below.
+              Get started by pasting your &apos;my clippings.txt&apos; file
+              below.
             </p>
           </main>
         </div>
