@@ -7,6 +7,7 @@ import {
   parseKindleEntries,
   organizeKindleEntriesByBookTitle,
 } from '@darylserrano/kindle-clippings';
+import ClippingsInput from '../components/ClippingsInput';
 
 export default function Home() {
   const [clippings, setClippings] = useState();
@@ -45,16 +46,7 @@ export default function Home() {
       <div className="section">
         <div className="container">
           <main className="main">
-            <div className="field">
-              <label className="label">Clippings File</label>
-              <div className="control">
-                <textarea
-                  className="textarea"
-                  placeholder="Paste your clippings file here"
-                  onChange={handleClippingChange}
-                />
-              </div>
-            </div>
+            <ClippingsInput handleChange={handleClippingChange} />
             <div className="field">
               <label className="label">Output</label>
               <div className="control">
