@@ -9,24 +9,35 @@ import {
   organizeKindleEntriesByAuthors,
 } from '@darylserrano/kindle-clippings';
 import ClippingsInput from '../components/ClippingsInput';
+import DisplayAuthors from '../components/DisplayAuthors';
 import Link from 'next/link';
 
 export default function Home() {
-  const [clippings, setClippings] = useState();
+  const [clippings, setClippings] = useState([]);
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState([]);
+  const [authorList, setAuthorList] = useState();
 
   const handleClippingChange = (e) => {
-    try {
-      const clippings = readKindleClipping(e.target.value);
-      const parsedClippings = parseKindleEntries(clippings);
-      const parsedBooks = organizeKindleEntriesByBookTitle(parsedClippings);
-      const parsedAuthors = organizeKindleEntriesByAuthors(parsedClippings);
-      setClippings(parsedClippings);
-      setBooks(parsedBooks);
-      setAuthors(parsedAuthors);
-    } catch (err) {
-      console.log(err);
+    if (e.target.value === '') {
+      setClippings([]);
+      setBooks([]);
+      setAuthors([]);
+      setAuthorList();
+    } else {
+      try {
+        const clippings = readKindleClipping(e.target.value);
+        const parsedClippings = parseKindleEntries(clippings);
+        const parsedBooks = organizeKindleEntriesByBookTitle(parsedClippings);
+        const parsedAuthors = Object.fromEntries(
+          organizeKindleEntriesByAuthors(parsedClippings)
+        );
+        setClippings(parsedClippings);
+        setBooks(parsedBooks);
+        setAuthors(parsedAuthors);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -58,7 +69,11 @@ export default function Home() {
                 <textarea
                   className="textarea"
                   placeholder="Output will appear here"
-                  value={JSON.stringify(clippings, null, 2)}
+                  value={
+                    clippings.length > 0
+                      ? JSON.stringify(clippings, null, 2)
+                      : ''
+                  }
                   readOnly
                 />
               </div>
@@ -75,25 +90,7 @@ export default function Home() {
               Click on an author to see a list of his books.
             </p>
             <div className="columns is-multiline">
-              {Array(authors).map((book) => (
-                <div
-                  className="column is-one-third"
-                  key={book.title || 'title'}
-                >
-                  <Link
-                    href="/authors/[book]"
-                    as={`/authors/${book.authors[0] || 'title'}`}
-                  >
-                    <a>
-                      <div className="card">
-                        <div className="card-image">
-                          <p>Title is here</p>
-                        </div>
-                      </div>
-                    </a>
-                  </Link>
-                </div>
-              ))}
+              <DisplayAuthors authors={authors} />
             </div>
           </main>
         </div>
