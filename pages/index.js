@@ -35,7 +35,7 @@ export default function Home() {
               <div className="control">
                 <textarea
                   className="textarea"
-                  placeholder="Output will appear here"
+                  placeholder="Parsed output will appear here"
                   value={
                     value.clippings.length > 0
                       ? JSON.stringify(value.clippings, null, 2)
@@ -55,7 +55,7 @@ export default function Home() {
             <p className="subtitle is-4 has-text-centered">
               Click on a book to see its highlights.
             </p>
-            <div className="columns is-multiline">
+            <div className="block">
               <DisplayBooks books={value.books} />
             </div>
           </main>
