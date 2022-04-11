@@ -1,10 +1,6 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import styles from '../styles/Home.module.css';
-import { useState } from 'react';
 import ClippingsInput from '../components/ClippingsInput';
 import DisplayBooks from '../components/DisplayBooks';
-import Link from 'next/link';
 import { useContext } from 'react';
 import AppContext from '../components/AppContext';
 
