@@ -16,3 +16,15 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.card-content {
+  height: 90%;
+}
+
+.card-footer {
+  height: 10%;
+}
+
+.column.box {
+  margin: 0.75rem;
+}
