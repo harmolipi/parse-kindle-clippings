@@ -1,6 +1,6 @@
 # Kindle Clippings Parser
 
-An interface for parsing out and exploring your Kindle highlights.
+An interface for parsing out and exploring your Kindle highlights, developed using NextJS.
 
 ## About
 
