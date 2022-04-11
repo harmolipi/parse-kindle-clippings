@@ -2,12 +2,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 import { useState } from 'react';
-import {
-  readKindleClipping,
-  parseKindleEntries,
-  organizeKindleEntriesByBookTitle,
-  organizeKindleEntriesByAuthors,
-} from '@darylserrano/kindle-clippings';
 import ClippingsInput from '../components/ClippingsInput';
 import DisplayBooks from '../components/DisplayBooks';
 import Link from 'next/link';
@@ -16,30 +10,7 @@ import AppContext from '../components/AppContext';
 
 export default function Home() {
   const value = useContext(AppContext);
-
-  const handleClippingChange = (e) => {
-    if (e.target.value === '') {
-      value.setClippings([]);
-      value.setBooks([]);
-      value.setAuthors([]);
-    } else {
-      try {
-        const clippingsInput = readKindleClipping(e.target.value);
-        const parsedClippings = parseKindleEntries(clippingsInput);
-        const parsedBooks = Object.fromEntries(
-          organizeKindleEntriesByBookTitle(parsedClippings)
-        );
-        const parsedAuthors = Object.fromEntries(
-          organizeKindleEntriesByAuthors(parsedClippings)
-        );
-        value.setClippings(parsedClippings);
-        value.setBooks(parsedBooks);
-        value.setAuthors(parsedAuthors);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
+  console.log(value.clippings);
 
   return (
     <>
@@ -62,7 +33,7 @@ export default function Home() {
       <div className="section">
         <div className="container">
           <main className="main">
-            <ClippingsInput handleChange={handleClippingChange} />
+            <ClippingsInput />
             <div className="field">
               <label className="label">JSON</label>
               <div className="control">
