@@ -6,20 +6,25 @@ import {
   readKindleClipping,
   parseKindleEntries,
   organizeKindleEntriesByBookTitle,
+  organizeKindleEntriesByAuthors,
 } from '@darylserrano/kindle-clippings';
 import ClippingsInput from '../components/ClippingsInput';
+import Link from 'next/link';
 
 export default function Home() {
   const [clippings, setClippings] = useState();
   const [books, setBooks] = useState([]);
+  const [authors, setAuthors] = useState([]);
 
   const handleClippingChange = (e) => {
     try {
       const clippings = readKindleClipping(e.target.value);
       const parsedClippings = parseKindleEntries(clippings);
       const parsedBooks = organizeKindleEntriesByBookTitle(parsedClippings);
+      const parsedAuthors = organizeKindleEntriesByAuthors(parsedClippings);
       setClippings(parsedClippings);
       setBooks(parsedBooks);
+      setAuthors(parsedAuthors);
     } catch (err) {
       console.log(err);
     }
@@ -57,6 +62,38 @@ export default function Home() {
                   readOnly
                 />
               </div>
+            </div>
+          </main>
+        </div>
+      </div>
+      <div className="section">
+        {/* Display list of authors with links to '/authors/[author-name]' if there are any books*/}
+        <div className="container">
+          <main className="main">
+            <h1 className="title is-1 has-text-centered">Books</h1>
+            <p className="subtitle is-4 has-text-centered">
+              Click on an author to see a list of his books.
+            </p>
+            <div className="columns is-multiline">
+              {Array(authors).map((book) => (
+                <div
+                  className="column is-one-third"
+                  key={book.title || 'title'}
+                >
+                  <Link
+                    href="/authors/[book]"
+                    as={`/authors/${book.authors[0] || 'title'}`}
+                  >
+                    <a>
+                      <div className="card">
+                        <div className="card-image">
+                          <p>Title is here</p>
+                        </div>
+                      </div>
+                    </a>
+                  </Link>
+                </div>
+              ))}
             </div>
           </main>
         </div>
